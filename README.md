@@ -15,3 +15,6 @@ pipenv run python shotty/shotty.py
 pipenv run python shotty/shotty.py list --project=Valkyre
 pipenv run python shotty/shotty.py start --project=Valkyre
 pipenv run python shotty/shotty.py stop --project=Valkyre
+pipenv run python shotty/shotty.py snapshots list
+pipenv run python shotty/shotty.py instances snapshot
+ 
