@@ -19,4 +19,7 @@ pipenv run python shotty/shotty.py snapshots list
 pipenv run python shotty/shotty.py instances snapshot
 
 Added error handlign 
- 
+
+handles pending snapshots            
+            
+ pipenv run python shotty/shotty.py instances snapshot --proje
