@@ -15,6 +15,11 @@ def filter_instances(project):
     else:
         instances = ec2.instances.all()
     return instances
+    
+
+def has_pending_snapshot(volume):
+        snapshots = list(volume.snapshots.all())
+        return snapshots and snapshots[0].state == 'pending'
           
 
 @click.group()
@@ -72,8 +77,6 @@ def list_snapshots(project,list_all):
     return    
 
 
-
-
 @cli.group('instances')
 def instances():
     """Commands for Instances"""
@@ -109,15 +112,23 @@ def create_snapshots(project):
 
     for i in instances:
         print("Stopping {0}...".format(i.id))
+        
         i.stop()
         i.wait_until_stopped()
+        
         for v in i.volumes.all():
+            if has_pending_snapshot(v):
+                print("   Skipping {0}".format(v.id))
+                continue
+            
             print("Creating snaphot of {0}".format(v.id))    
             v.create_snapshot(Description="Created by Snappy")
-            print("Starting {0}...".format(i.id))
-            i.start()
-            i.wait_until_running()
-            
+        
+        print("Starting {0}...".format(i.id))
+        
+        i.start()
+        i.wait_until_running()
+        
     print("Snapshots Complete")
     
     return
