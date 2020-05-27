@@ -17,4 +17,6 @@ pipenv run python shotty/shotty.py start --project=Valkyre
 pipenv run python shotty/shotty.py stop --project=Valkyre
 pipenv run python shotty/shotty.py snapshots list
 pipenv run python shotty/shotty.py instances snapshot
+
+Added error handlign 
  
